@@ -1,325 +1,744 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 :root {
-    --color-primary: #10316b;
-    --color-secondary: #000000;
-    --color-accent: #e25822;
-    --color-background: #ececeb; 
-    --titulos: 40px;
-    --parrafos: 20px;
-    --subtitulos: 28px;
-    --anuncios: 16px;
-  }
-body{
-    background-color: var(--color-accent);
+  --color-primary: #10316b;
+  --color-secondary: #000000;
+  --color-accent: #e25822;
+  --color-background: #ececeb;
+  --titulos: 40px;
+  --parrafos: 20px;
+  --subtitulos: 28px;
+  --anuncios: 16px;
 }
+
+body {
+  background-color: var(--color-background);
+}
+
 header {
-    background-color: var(--color-secondary);
-    color: var(--color-accent);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px 30px;    
+  background-color: var(--color-secondary);
+  color: var(--color-accent);
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
+/* 🌐 Barra de navegación fija */
 .navbar {
-    display: flex;
-    align-items: center;  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-secondary);
+  z-index: 1000;
+  padding: clamp(10px, 2vw, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.logo img{
-    max-width: 20px;
-    height: auto; 
+/* 🏠 Logo */
+.logo img {
+  width: clamp(30px, 5vw, 42px);
+  height: auto;
 }
 
-.titulo{
-    flex: 1;
-    text-align: center; 
-    font-size: 20px;
+/* 🏷️ Título centrado */
+.titulo {
+  flex: 1;
+  text-align: center;
+  font-size: clamp(18px, 3vw, 24px);
+  color: var(--color-accent);
+  font-weight: bold;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
 }
 
+/* 🍔 Icono de menú hamburguesa */
 .menu-icon {
-    font-size: 20px;
-    cursor: pointer; 
+  font-size: clamp(24px, 5vw, 28px);
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  padding: 5px 10px;
+  transition: transform 0.3s ease;
+  display: none; /* solo visible en móvil */
+  background: none;
+  border: none;
 }
 
-.menu {
+/* 📱 Menú desplegable */
+.nav-menu {
+  display: flex;
+  gap: clamp(12px, 3vw, 24px);
+}
+
+.nav-menu ul {
+  list-style: none;
+  display: flex;
+  gap: clamp(10px, 2.5vw, 20px);
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  margin: 0;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 600;
+  padding: clamp(6px, 1vw, 8px) clamp(10px, 2vw, 12px);
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-menu a:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* 🌟 Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔧 Responsive: activar hamburguesa */
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: block;
+    z-index: 1100;
+  }
+
+  .nav-menu {
     display: none;
     position: absolute;
-    top: 40px;
-    right: 50px;
-    background-color: var(--color-accent);
-    width: 7%;
-    text-align: center;    
-}
+    top: 65px;
+    right: 20px;
+    flex-direction: column;
+    background-color: var(--color-background);
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+  }
 
-.menu ul {
-    list-style: none;
-    padding: 5px;
-}
+  #menu-toggle:checked + .menu-icon {
+    transform: rotate(90deg);
+  }
 
-.menu li {
-    margin-bottom: 10px;
-}
-
-.menu a{
-    text-decoration: none;
-    color: #000;
-    font-size: 16px;
-    font-weight: bold;
-    transition: all 0.5s ease;
-}
-
-.menu a:hover{
-    padding: 5px 10px;
-    background: var(--color-primary);
-    color: #000;
-    border-radius: 10px;
-}
-#menu-toggle {
-    display: none;
-}
-
-#menu-toggle:checked ~ .menu {
-    display: block;
-}
-
-.banner {
-    background-image: url(../imagenes/portada4.jpg);
-    width: 100%;
-    height: 100vh;
-    background-position: bottom;
+  #menu-toggle:checked + .menu-icon + .nav-menu {
     display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    gap: clamp(8px, 2vw, 12px);
+  }
+
+  .nav-menu a {
+    color: var(--color-primary);
+  }
 }
 
-.banner img{
-    max-width: 260px;
-    height: auto;  
+/* Banner */
+.banner {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease-in-out;
+  position: relative;
+  z-index: 1;
 }
 
 .banner-content {
-    margin-top: 60px;
-    text-align: center; 
+  text-align: center;
+  z-index: 1;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
+/* 📷 Logo */
+.banner-content img {
+  width: clamp(120px, 30vw, 260px);
+  height: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* 🏷️ Textos con clamp */
 .content-p {
-    font-size: 40px;
-    color: var(--color-background);
+  font-size: clamp(20px, 4vw, 40px);
+  color: var(--color-background);
+  -webkit-text-stroke: 0.2px black;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
 }
 
 .content-h1 {
-    font-size: 60px;
-    color: var(--color-accent);   
+  font-size: clamp(28px, 5vw, 50px);
+  color: var(--color-accent);
+  -webkit-text-stroke: 0.2px black;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .content-h2 {
-    font-size: 24px;
-    color: var(--color-background);
+  font-size: clamp(14px, 2vw, 20px);
+  color: var(--color-background);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
 }
 
-.botones{
-    color: var(--color-secondary);
+/**MAIN**/
+.seccion-nosotros {
+  background-color: var(--color-background);
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 5vw, 40px);
+  text-align: center;
+}
+
+.contenedor-nosotros {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.titulo-seccion {
+  font-size: clamp(24px, 4vw, 36px);
+  color: var(--color-primary);
+  margin-bottom: clamp(16px, 3vw, 32px);
+}
+
+.descripcion-nosotros {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: #333;
+  margin-bottom: clamp(24px, 4vw, 48px);
+  line-height: 1.6;
+}
+
+.bloques-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  text-align: left;
+}
+
+.bloque h3 {
+  font-size: clamp(18px, 2.8vw, 26px);
+  color: var(--color-accent);
+  margin-bottom: clamp(8px, 2vw, 16px);
+}
+
+.bloque p,
+.bloque ul {
+  font-size: clamp(14px, 2.2vw, 18px);
+  color: #555;
+  line-height: 1.5;
+}
+
+.bloque ul {
+  padding-left: clamp(16px, 2vw, 24px);
+}
+
+/* Sección general */
+.seccion-propiedades {
+  text-align: center;
+  margin-top: clamp(8px, 2vw, 20px);
+  padding: clamp(16px, 4vw, 32px);
+  background-color: var(--color-background);
+  border-radius: clamp(8px, 2vw, 16px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Título principal */
+.titulo-principal {
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: clamp(8px, 2vw, 16px);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Subtítulo (Alquilar / Comprar) */
+.subtitulo-tipo {
+  font-size: clamp(18px, 4vw, 26px);
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: clamp(16px, 3vw, 24px);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Botones organizados */
+.botones-filtro {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(10px, 3vw, 20px);
+  margin-top: clamp(8px, 2vw, 16px);
+}
+
+/* Texto marketing */
+.contenedor-texto-marketing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: clamp(24px, 4vw, 48px) auto;
+  padding: 0 clamp(12px, 4vw, 32px);
+}
+
+.texto-marketing {
+  max-width: 800px;
+  font-size: clamp(14px, 2.5vw, 20px);
+  font-weight: 500;
+  color: var(--color-secondary);
+  background-color: #ffffff;
+  padding: clamp(16px, 4vw, 32px);
+  border-left: 5px solid var(--color-accent);
+  border-radius: clamp(6px, 2vw, 12px);
+  text-align: center;
+  font-style: italic;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease-in-out;
+}
+
+/* Botones filtro */
+.botones-filtro button {
+  padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 24px);
+  background-color: white;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: clamp(6px, 2vw, 12px);
+  font-size: clamp(14px, 2.8vw, 16px);
+  font-weight: 600;
+  font-family: "Segoe UI", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.botones-filtro button:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Botones de tipo-switch */
+.tipo-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(12px, 4vw, 24px);
+  margin: clamp(20px, 5vw, 40px) 0;
+  padding: clamp(8px, 2vw, 16px);
+  background-color: var(--color-background);
+  border-radius: clamp(8px, 2vw, 16px);
+}
+
+.tipo-switch button {
+  padding: clamp(10px, 3vw, 14px) clamp(18px, 5vw, 30px);
+  font-size: clamp(14px, 3vw, 18px);
+  font-weight: 600;
+  font-family: "Segoe UI", sans-serif;
+  color: var(--color-primary);
+  background-color: white;
+  border: 2px solid var(--color-primary);
+  border-radius: clamp(6px, 2vw, 12px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tipo-switch button:hover {
+  background-color: var(--color-accent);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.tipo-switch button.active {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 🎠 Carrousel main */
+.contenedor-carrousel {
+  margin: 0 clamp(12px, 5vw, 40px);
+}
+
+.carrusel-propiedades {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 2vw, 16px);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: clamp(8px, 2vw, 20px);
+  box-sizing: border-box;
+}
+
+.flecha {
+  font-size: clamp(20px, 5vw, 36px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+  padding: clamp(6px, 1.5vw, 16px);
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.flecha:hover {
+  color: var(--color-secondary);
+}
+
+/* Contenedor horizontal de tarjetas */
+.contenedor-tarjetas {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(12px, 3vw, 24px);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: clamp(8px, 2vw, 16px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 80%;
+}
+
+.contenedor-tarjetas::-webkit-scrollbar {
+  display: none;
+}
+
+/* 🏠 Tarjeta general */
+.card-propiedad {
+  flex: 0 0 auto;
+  width: clamp(240px, 50vw, 300px);
+  max-width: 100%;
+  background-color: white;
+  border: 2px solid var(--color-primary);
+  border-radius: clamp(10px, 2vw, 16px);
+  padding: clamp(12px, 3vw, 20px);
+  margin: clamp(8px, 2vw, 16px);
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-propiedad:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 🖼️ Imagen destacada */
+.card-propiedad img {
+  width: 100%;
+  height: clamp(140px, 25vw, 200px);
+  object-fit: cover;
+  border-radius: clamp(8px, 2vw, 12px);
+  margin-bottom: clamp(8px, 2vw, 14px);
+  transition: transform 0.3s ease;
+}
+
+.card-propiedad img:hover {
+  transform: scale(1.03);
+}
+
+/* 📌 Título de la propiedad */
+.titulo-propiedad-card {
+  font-size: clamp(16px, 4vw, 22px);
+  color: var(--color-primary);
+  margin: clamp(6px, 1.5vw, 12px) 0 5px;
+  font-weight: bold;
+}
+
+/* 📝 Descripción de la propiedad */
+.descripcion-propiedad {
+  font-size: clamp(14px, 3vw, 18px);
+  color: #444;
+  margin-bottom: clamp(6px, 1.5vw, 10px);
+}
+
+/* 📍 Dirección */
+.direccion-propiedad {
+  font-size: clamp(12px, 2.5vw, 16px);
+  color: #666;
+  margin-bottom: 4px;
+}
+
+/* 💰 Precio */
+.precio-propiedad {
+  font-size: clamp(16px, 4vw, 22px);
+  color: var(--color-accent);
+  font-weight: bold;
+  margin-top: clamp(4px, 1vw, 10px);
+}
+
+/* 🎯 Sección de ventajas */
+.ventajas-inmobiliaria {
+  background-color: var(--color-background);
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+  text-align: center;
+}
+
+.ventajas-inmobiliaria h2 {
+  font-size: clamp(24px, 5vw, 38px);
+  color: var(--color-primary);
+  margin-bottom: clamp(24px, 5vw, 40px);
+  font-family: "Segoe UI", sans-serif;
+  font-weight: bold;
+}
+
+.ventajas-grid {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 36px);
+  flex-wrap: wrap;
+}
+
+.ventaja {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: clamp(20px, 5vw, 32px);
+  width: clamp(240px, 45vw, 300px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.ventaja:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.ventaja i {
+  font-size: clamp(28px, 5vw, 40px);
+  color: var(--color-accent);
+  margin-bottom: clamp(10px, 2vw, 20px);
+}
+
+.ventaja h4 {
+  font-size: clamp(18px, 4vw, 24px);
+  color: var(--color-primary);
+  margin-bottom: clamp(6px, 1.5vw, 12px);
+}
+
+.ventaja p {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: #333;
+  line-height: 1.5;
+}
+
+
+/* ⭐ Testimonios */
+.testimonios {
+  background-color: #ffffff;
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+  text-align: center;
+}
+
+.testimonios h2 {
+  font-size: clamp(24px, 5vw, 38px);
+  color: var(--color-primary);
+  margin-bottom: clamp(24px, 5vw, 40px);
+  font-family: "Segoe UI", sans-serif;
+  font-weight: bold;
+}
+
+.carrusel-testimonios {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 36px);
+  flex-wrap: wrap;
+}
+
+.testimonio {
+  background-color: var(--color-background);
+  border-radius: 12px;
+  padding: clamp(20px, 5vw, 30px);
+  width: clamp(240px, 45vw, 320px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  font-style: italic;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.testimonio:hover {
+  transform: translateY(-6px);
+}
+
+.testimonio p {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: #333;
+  margin-bottom: clamp(12px, 2vw, 24px);
+  line-height: 1.6;
+}
+
+.testimonio span {
+  font-weight: bold;
+  font-size: clamp(14px, 3vw, 16px);
+  color: var(--color-secondary);
+}
+
+
+/* 📩 Contacto rápido */
+.contacto-rapido {
+  background-color: var(--color-background);
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+  display: flex;
+  justify-content: center;
+}
+
+.contenedor-contacto {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.titulo-seccion {
+  font-size: clamp(24px, 5vw, 38px);
+  color: var(--color-primary);
+  margin-bottom: clamp(20px, 4vw, 40px);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.formulario-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2.5vw, 20px);
+}
+
+.formulario-contacto input,
+.formulario-contacto textarea {
+  padding: clamp(10px, 2.5vw, 16px);
+  font-size: clamp(14px, 3.5vw, 17px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: none;
+}
+
+.formulario-contacto button {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: clamp(10px, 2.5vw, 16px);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-contacto button:hover {
+  background-color: var(--color-accent);
+}
+
+
+/* 🗺️ Mapa */
+.mapa {
+  background-color: #fff;
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
+  display: flex;
+  justify-content: center;
+}
+
+.contenedor-mapa {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+}
+
+.contenedor-mapa iframe {
+  border: none;
+  width: 100%;
+  height: clamp(240px, 40vw, 360px);
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.info-ubicacion {
+  background-color: var(--color-background);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: clamp(16px, 4vw, 24px);
+  margin-bottom: clamp(16px, 4vw, 24px);
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--color-accent);
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info-ubicacion p {
+  margin: 8px 0;
+}
+
+/** 🌍 FOOTER **/
+.footer {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: clamp(20px, 4vw, 40px) clamp(10px, 5vw, 30px);
+  text-align: center;
+  font-size: clamp(13px, 2.5vw, 15px);
+  font-family: "Segoe UI", sans-serif;
+  border-top: 4px solid var(--color-accent);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 3vw, 20px);
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 1.5vw, 10px);
+}
+
+.footer-item i {
+  color: var(--color-accent);
+  margin-right: clamp(6px, 2vw, 10px);
+  font-size: clamp(16px, 3vw, 20px);
+}
+
+/* 🖥️ Estilo en pantallas medianas y grandes */
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-item {
+    flex-direction: row;
     align-items: center;
-    border: none;
-    border-radius: 2px;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    padding: 20px;
+  }
 }
-
-.botones .boton1{
-    padding: 5px 10px;
-    color: #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.boton1:hover{
-    padding: 5px 10px;
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-radius: 10px;
-}
-.botones .boton2{
-    padding: 5px 10px;
-    color: #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.boton2:hover{
-    padding: 5px 10px;
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-radius: 10px;
-}
-.botones .boton3{
-    padding: 5px 10px;
-    color: #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.boton3:hover{
-    padding: 5px 10px;
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-radius: 10px;
-}
-.botones .boton4{
-    padding: 5px 10px;
-    color: #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.boton4:hover{
-    padding: 5px 10px;
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-radius: 10px;
-}
-.botones .boton5{
-    padding: 5px 10px;
-    color: #000;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.boton5:hover{
-    padding: 5px 10px;
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-radius: 10px;
-}
-.contenido{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    
-}
-.eleganteh4{
-    font-size: 30px;
-    color: var(--color-primary);
-    margin: 5px 0;
-}
-.alquilarh3{
-    font-size: 30px;
-    color: var(--color-primary);
-    margin: 10px 0;
-}
-.alquiler{
-    max-width: 98%;
-    margin: 20px auto;
-    display: grid;
-    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 20px;
-    justify-items: center;
-    align-items: start;
-       
-}
-@media (max-widht: 768px){
-    .alquiler{
-        flex-direction: column;
-        align-items: center;
-    }
-}
-.caja1{
-    background-color: aqua;
-    text-align: center;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-}
-.caja1 .textoh5{
-    font-size: 18px;
-}
-.moderna1al{
-    max-width: 300px;
-    height: auto;
-    align-items: start;
-}
-.caja2{
-    background-color: rgb(71, 90, 90);
-    text-align: center;
-    padding: 10px;
-}
-.caja2 .textoh5{
-    font-size: 18px;
-}
-.moderna2al{
-    max-width: 300px;
-    height: auto;
-}
-
-.caja3{
-    background-color: rgb(71, 90, 90);
-    text-align: center;
-    padding: 10px;
-}
-.caja3 .textoh5{
-    font-size: 18px;
-}
-.moderna3al{
-    max-width: 265px;
-    height: auto;
-}
-
-.caja4{
-    background-color: rgb(71, 90, 90);
-    text-align: center;
-    padding: 10px;
-}
-.caja4 .textoh5{
-    font-size: 18px;
-}
-.moderna4al{
-    max-width: 265px;
-    height: auto;
-}
-
-.caja5{
-    background-color: rgb(71, 90, 90);
-    text-align: center;
-    padding: 10px;
-}
-.caja5 .textoh5{
-    font-size: 18px;
-}
-.moderna5al{
-    max-width: 265px;
-    height: auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-footer{
-    background-color: var(--color-primary);
-    text-align: center;
-    padding: 15px;
-    color: #fff;
-    font-size: 14px;
-    line-height: 14px;
-}
-
-
-
