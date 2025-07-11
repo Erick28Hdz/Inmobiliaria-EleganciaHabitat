@@ -158,6 +158,10 @@ header {
   .nav-menu a {
     color: var(--color-primary);
   }
+
+  .nav-menu.open {
+    display: flex;
+  }
 }
 
 /* Banner */
@@ -554,7 +558,6 @@ header {
   line-height: 1.5;
 }
 
-
 /* ⭐ Testimonios */
 .testimonios {
   background-color: #ffffff;
@@ -604,7 +607,6 @@ header {
   font-size: clamp(14px, 3vw, 16px);
   color: var(--color-secondary);
 }
-
 
 /* 📩 Contacto rápido */
 .contacto-rapido {
@@ -657,7 +659,6 @@ header {
 .formulario-contacto button:hover {
   background-color: var(--color-accent);
 }
-
 
 /* 🗺️ Mapa */
 .mapa {
